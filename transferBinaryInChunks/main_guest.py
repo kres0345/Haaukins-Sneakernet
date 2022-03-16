@@ -1,18 +1,14 @@
 import base64
+import sys
 
-def encode_binary(filePath: str):
-    base64.b64encode()
-
-    pass
-
-
-def decode_chunks():
-    pass
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    filePath = input("File to transfer: ")
-    
+    print ("Enter amount of chunks: ")
+    amount_of_chunks = int(sys.stdin.readline())
+    print ("Enter filename: ")
+    target_file = sys.stdin.readline()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    with open(target_file, "wb") as f:
+        for i in range(amount_of_chunks):
+            print ("Paste chunk %s: " % (i+1))
+            encoded_chunk = sys.stdin.readline()
+            f.write(base64.standard_b64decode(encoded_chunk))

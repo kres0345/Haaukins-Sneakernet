@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading;
@@ -17,7 +18,7 @@ namespace HostStream
         protected override void OnOpen()
         {
             HostStream.websocketInstance = this;
-            Console.WriteLine("Connected");
+            Debug.WriteLine("Connected");
         }
 
         public void UpdateClipboard(string encodedData)
@@ -61,7 +62,7 @@ namespace HostStream
             foreach (var command in commands)
             {
                 string[] arguments = command.Split(',');
-                //Console.WriteLine($"Command: {arguments[0]}");
+                Debug.WriteLine($"Command: {arguments[0]}");
 
                 if (arguments.Length > 1 && arguments[0] != "4.sync" && arguments[0] != "4.size")
                 {

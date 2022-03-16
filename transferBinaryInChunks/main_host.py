@@ -1,21 +1,26 @@
 import base64
+import pyclip
 
-def encode_binary(filePath: str):
-    base64.b64encode()
+CHUNK_SIZE = 4032
 
-    pass
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    amount_of_chunks = int(input("Enter amount of chunks: "))
     target_file = input("Enter filename: ")
 
-    encoded_binary = ""
-    for i in range(amount_of_chunks):
-        encoded_chunk = input(f"Paste chunk {i}: ")
-        encoded_binary += encoded_chunk
+    with open(target_file, "rb") as f:
+        encoded_binary = []
 
-    with open(target_file, "wb") as f:
-        f.write(base64.b64decode(encoded_binary))
+        chunk = f.read(CHUNK_SIZE)
+        while chunk != b'':
+            encoded_binary.append(base64.b64encode(chunk).decode('ascii'))
+            chunk = f.read(CHUNK_SIZE)
 
+        chunk_count = len(encoded_binary)
+        print(f"There are {chunk_count} chunks")
+
+        i = 1
+        for data_chunk in encoded_binary:
+            pyclip.copy(data_chunk)
+            print("..." + data_chunk[-10:])
+
+            encoded_chunk = input(f"Chunk {i}/{chunk_count} copied to clipboard. Press enter to continue")
+            i += 1
